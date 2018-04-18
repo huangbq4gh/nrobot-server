@@ -8,14 +8,15 @@ using NRobot.Server.Imp.Config;
 
 namespace NRobot.Server
 {
-	/// <summary>
-	/// Class with program entry point.
-	/// </summary>
-	internal sealed class Program
+    /// <summary>
+    /// Class with program entry point.
+    /// </summary>
+
+    internal sealed class Program
 	{
 		
 		//log4net
-		private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
+		private static readonly ILog Log = LogManager.GetLogger(typeof(Program));        
 		
 		/// <summary>
 		/// Program entry point.
@@ -60,8 +61,8 @@ namespace NRobot.Server
 			System.IO.Stream st;
             System.Reflection.Assembly a = Assembly.GetExecutingAssembly();
             st = a.GetManifestResourceStream("LogoIcon");
-            _trayicon.Icon = new System.Drawing.Icon(st); 
-            _trayicon.Text = String.Format("NRobot.Server version {0}",Assembly.GetExecutingAssembly().GetName().Version);
+            _trayicon.Icon = new System.Drawing.Icon(st);
+            _trayicon.Text = String.Format("NRobot.Server version {0}", Assembly.GetExecutingAssembly().GetName().Version);
             //setup context menu
             _contextmenu.Items.Add(_keywordsoption);
             _contextmenu.Items.Add(_aboutoption);

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Configuration;
 using log4net;
 using System.Security.Principal;
 using NRobot.Server.Imp.Domain;
 using NRobot.Server.Imp.Config;
 using NRobot.Server.Imp.Services;
+using NRobot.Server.Imp.Logging;
 
 namespace NRobot.Server.Imp
 {
@@ -12,25 +14,34 @@ namespace NRobot.Server.Imp
 	/// </summary>
 	public class NRobotService
 	{
-		
+        	
 		private static readonly ILog Log = LogManager.GetLogger(typeof(NRobotService));
         private HttpService _httpservice;
 	    private KeywordManager _keywordManager;
 	    private XmlRpcService _rpcService;
 	    private NRobotServerConfig _config;
+        // determines whether or not keyword executions are logged  
+        public static bool log = false;
 
-		public NRobotService(NRobotServerConfig config) 
+        public NRobotService(NRobotServerConfig config) 
         {
             if (config == null) throw new Exception("No configuration specified");
 		    _config = config;
             _keywordManager = new KeywordManager();
-            _rpcService = new XmlRpcService(_keywordManager);
-            _httpservice = new HttpService(_rpcService, _keywordManager, config.Port);
-            LoadKeywords();
-        }
-		
 
-		
+            // Enable logging if on production machine 
+            if (Environment.MachineName == ConfigurationManager.AppSettings["ProductionMachine"])
+            {
+                log = true;
+                Log.Debug("Logging enabled on " + ConfigurationManager.AppSettings["ProductionMachine"]);
+                ExecutionLogger.SetBuild(config.Port.ToString());
+            }
+
+            LoadKeywords();        
+            _rpcService = new XmlRpcService(_keywordManager);
+            _httpservice = new HttpService(_rpcService, _keywordManager, config.Port); ;
+        }
+			
 		/// <summary>
 		/// Loads the keyword libraries
 		/// </summary>
@@ -48,8 +59,7 @@ namespace NRobot.Server.Imp
 			{
 				Log.Error(String.Format("Unable to load all configured keywords, {0}",e.Message));
 				throw;
-			}
-			
+			}			
 		}
 		
 		/// <summary>

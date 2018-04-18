@@ -58,11 +58,19 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CookComputing.XmlRpcV2">
-      <HintPath>..\packages\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
+    <Reference Include="CookComputing.XmlRpcV2, Version=2.5.0.0, Culture=neutral, PublicKeyToken=a7d6e17aa302004d, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\ThirdParty\NuGet\xmlrpcnet.2.5.0\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\ThirdParty\NuGet\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3dee95c3b3b78c07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\ThirdParty\Common\Microsoft\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=3dee95c3b3b78c07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\ThirdParty\Common\Microsoft\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -81,6 +89,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\RIDETraceListener.cs" />
+    <Compile Include="Logging\SQLHelper.cs" />
+    <Compile Include="Logging\ExecutionLogger.cs" />
     <Compile Include="XmlConfig\AssemblyElement.cs" />
     <Compile Include="XmlConfig\AssemblyElementCollection.cs" />
     <Compile Include="XmlConfig\NRobotServerConfiguration.cs" />
@@ -101,7 +112,9 @@
     <Compile Include="Services\XmlRpcService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NRobot.Server.Exceptions\NRobot.Server.Exceptions.csproj">

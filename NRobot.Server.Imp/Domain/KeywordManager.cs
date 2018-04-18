@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using System.IO;
 using log4net;
 using NRobot.Server.Imp.Config;
+using NRobot.Server.Imp.Logging;
 
 namespace NRobot.Server.Imp.Domain
 {
@@ -72,8 +73,14 @@ namespace NRobot.Server.Imp.Domain
                         var keyword = new Keyword(kwinstance, method, kwdocumentation);
                         if (_loadedKeywords.ContainsKey(keyword.FriendlyName)) throw new Exception(String.Format("{0} keyword is duplicated", keyword.FriendlyName));
                         keywords.Add(keyword);
+                        
                     }
                 }
+                if(NRobotService.log == true )
+                {
+                    ExecutionLogger.LoadKeywords(keywords);
+                }
+              
                 _loadedKeywords.Add(config.TypeName, keywords);
                 Log.Debug(String.Format("Loaded keywords : {0}", String.Join(",", keywords.Select(k => k.FriendlyName).ToArray())));
             }
@@ -210,7 +217,8 @@ namespace NRobot.Server.Imp.Domain
             var result = new RunKeywordResult();
             var timer = new Stopwatch();
             var tracecontent = new MemoryStream();
-            var tracelistener = new TextWriterTraceListener(tracecontent);
+            //var tracelistener = new TextWriterTraceListener(tracecontent);
+            var tracelistener = new RIDETraceListener(tracecontent);
             Trace.Listeners.Add(tracelistener);
 
             try

@@ -53,7 +53,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\ThirdParty\NuGet\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -84,7 +84,9 @@
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <EmbeddedResource Include="logo.ico">
       <LogicalName>LogoIcon</LogicalName>
     </EmbeddedResource>
